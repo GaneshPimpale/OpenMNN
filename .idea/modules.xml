@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../TOuNN/.idea/TOuNN.iml" filepath="$PROJECT_DIR$/../TOuNN/.idea/TOuNN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../learn/learn_pyTorch/.idea/learn_pyTorch.iml" filepath="$PROJECT_DIR$/../learn/learn_pyTorch/.idea/learn_pyTorch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/openmnn.iml" filepath="$PROJECT_DIR$/.idea/openmnn.iml" />
+    </modules>
+  </component>
+</project>
