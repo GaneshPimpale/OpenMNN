@@ -1,4 +1,3 @@
-# Lab Noteook   
 # Create Lattice Patterns (2D):   
 Tried using a prine number grid, that shit didn't work (works for small sized lattice grids). Code **[here](https://github.com/GaneshPimpale/OpenMNN/blob/main/latticeGen.py)** under hex\_2d(). However, hex\_2*d\_*v2() is fully functional:    
    
