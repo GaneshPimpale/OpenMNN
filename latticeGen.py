@@ -387,5 +387,5 @@ def plot_3d(nodes, node_ids, beams=[], beam_ids=[]):
 if __name__ == '__main__':
     print('latticeGen.py debug...')
     #hex_2d(4, 4, 1, show=True)
-    #hex_2d_v2(4, 4, 1, show=True)
-    hex_3d(1, 1, 1, 1, show=True)
+    hex_2d_v2(4, 4, 1, show=True)
+    #hex_3d(1, 1, 1, 1, show=True)

@@ -11,13 +11,28 @@ def euc_dist(p1, p2):
     return np.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2 + (p1[2] - p2[2])**2)
 
 
-def mse_3d(y, y_h):
+def mse(y, y_h):
     Sum = 0
     for idx, p in enumerate(y):
         p_h = y_h[idx]
         e_d = euc_dist(p, p_h)
         Sum += e_d**2
     return Sum/len(y)
+
+
+def mse_2d(y, y_h):
+    """
+    This will act in the same way as MSE
+
+    :param y:
+    :param y_h:
+    :return:
+    """
+    Sum = 0
+    for idx, p in enumerate(y):
+        pass
+    #TODO: finish this function to only evalat ethe MSE on X and Y coordinates
+
 
 def list_to_x_y(List):
     x = []
@@ -71,15 +86,15 @@ def solve_E_single_input_gad():
         nodes, node_ids, beams, beam_ids, E_values, input_vecs, output_nodes, show_vis=True, show=True
     )
 
-    print('Initial MSE: ' + str(mse_3d(disp, fin_disp)))
+    print('Initial MSE: ' + str(mse(disp, fin_disp)))
     print('Minimum MSE: ' + str(min_mse))
 
     def lattice_func(e_vals):
         disp, pos, K = latticeSolver.solve_pynite_2d(
             nodes, node_ids, beams, beam_ids, e_vals, input_vecs, output_nodes
         )
-        mse = mse_3d(disp, fin_disp)
-        return mse
+        MSE = mse(disp, fin_disp)
+        return MSE
 
     def fitness_func(ga_instance, solution, solution_idx):
         mse = lattice_func(solution)
@@ -128,7 +143,7 @@ def solve_E_single_input_gad():
         nodes, node_ids, beams, beam_ids, solution, input_vecs, output_nodes, show_vis=True, show=True
     )
 
-    print('Final MSE: ' + str(mse_3d(disp, fin_disp)))
+    print('Final MSE: ' + str(mse(disp, fin_disp)))
     print('Output node final locations:')
     print(pos)
     print('Output node displacements:')
@@ -170,7 +185,11 @@ def solve_E_multi_input_gad():
     output_nodes = node_ids[:, node_ids.shape[0] - 1][node_ids[:, node_ids.shape[0] - 1] != 0]
 
     # Desired output node displacement; (x, y, z)
-    fin_disp = [(-3, 0, 0), (0, 0, 0), (3, 0, 0), (0, 0, 0)]
+    #fin_disp = [(-3, 0, 0), (0, 0, 0), (3, 0, 0), (0, 0, 0)]
+    #fin_disp = [(-1, 0, 0), (0, 0, 0), (1, 0, 0), (0, 0, 0)]
+    #fin_disp = [(0, 0, 0), (3, 0, 0), (3, 0, 0), (0, 0, 0)]
+    #fin_disp = [(0, 0, 0), (-3, 0, 0), (-3, 0, 0), (0, 0, 0)]
+    fin_disp = [(3, 0, 0), (-3, 0, 0), (-3, 0, 0), (3, 0, 0)]
 
     des_mse = 1  # Desired MSE value
     ### End of model parameters
@@ -179,7 +198,7 @@ def solve_E_multi_input_gad():
     disp, pos, K = latticeSolver.solve_pynite_2d(
         nodes, node_ids, beams, beam_ids, E_values, input_vecs, output_nodes, show_vis=True, show=True
     )
-    print('Initial MSE: ' + str(mse_3d(disp, fin_disp)))
+    print('Initial MSE: ' + str(mse(disp, fin_disp)))
     print('Minimum MSE: ' + str(des_mse))
 
 
@@ -187,8 +206,8 @@ def solve_E_multi_input_gad():
         disp, pos, K = latticeSolver.solve_pynite_2d(
             nodes, node_ids, beams, beam_ids, e_vals, input_vecs, output_nodes
         )
-        mse = mse_3d(disp, fin_disp)
-        return mse
+        MSE = mse(disp, fin_disp)
+        return MSE
 
     # PyGAD Tracing plots
     mse_ouputs = []
@@ -208,7 +227,7 @@ def solve_E_multi_input_gad():
     num_parents_mating = 6
     sol_per_pop = 8
     num_genes = len(E_values)
-    init_range_low = 0
+    init_range_low = -2000
     init_range_high = 500000
     parent_selection_type = "sss"
     keep_parents = 1
@@ -255,7 +274,7 @@ def solve_E_multi_input_gad():
     )
 
     print('Final MSE:')
-    print(mse_3d(disp, fin_disp))
+    print(mse(disp, fin_disp))
     print('Output node final locations:')
     print(pos)
     print('Output node displacements:')
